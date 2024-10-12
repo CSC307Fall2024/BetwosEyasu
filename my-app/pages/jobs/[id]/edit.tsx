@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState, FormEvent } from 'react';
+import React from 'react';
+
 
 // Define the Job interface for typing the fetched data
 interface Job {

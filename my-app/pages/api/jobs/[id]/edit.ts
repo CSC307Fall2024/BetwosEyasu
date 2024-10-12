@@ -1,8 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { id } = req.query;
 
   if (req.method === 'PUT') {
@@ -10,7 +14,7 @@ export default async function handler(req, res) {
 
     try {
       const updatedJob = await prisma.job.update({
-        where: { id: parseInt(id, 10) },
+        where: { id: parseInt(id as string, 10) }, // Ensure id is treated as a string
         data: {
           title,
           description,

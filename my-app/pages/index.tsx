@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
+// Define the Job interface
+interface Job {
+  id: number;
+  title: string;
+  description: string;
+  company: string;
+  location: string;
+  startDate: string;
+  endDate: string | null;
+}
+
 export default function Home() {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState<Job[]>([]); // Add type for jobs array
 
   // Fetch jobs from the API and sort them by most recent first
   useEffect(() => {
     async function fetchJobs() {
       const response = await fetch('/api/jobs');
-      const data = await response.json();
+      const data: Job[] = await response.json();
+
       // Sort jobs by endDate (most recent first)
-      const sortedJobs = data.sort((a, b) => {
+      const sortedJobs = data.sort((a: Job, b: Job) => {
         const endDateA = a.endDate ? new Date(a.endDate) : new Date();
         const endDateB = b.endDate ? new Date(b.endDate) : new Date();
-        return endDateB - endDateA;
+        return endDateB.getTime() - endDateA.getTime();
       });
+
       setJobs(sortedJobs);
     }
     fetchJobs();

@@ -1,15 +1,17 @@
 import { PrismaClient } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
     try {
+      // Ensure `id` is a string and then convert it to an integer
       const job = await prisma.job.findUnique({
         where: {
-          id: parseInt(id, 10),
+          id: parseInt(id as string, 10),
         },
       });
 

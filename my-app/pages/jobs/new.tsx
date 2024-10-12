@@ -1,25 +1,34 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 
+interface JobData {
+  title: string;
+  description: string;
+  company: string;
+  location: string;
+  startDate: string;
+  endDate: string | null;
+}
+
 export default function AddJob() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [company, setCompany] = useState('');
-  const [location, setLocation] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [company, setCompany] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string | null>(''); // Allow null for no end date
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const jobData = {
+    const jobData: JobData = {
       title,
       description,
       company,
       location,
       startDate,
-      endDate,
+      endDate: endDate ? endDate : null, // Set endDate to null if it's empty
     };
 
     try {
@@ -67,7 +76,7 @@ export default function AddJob() {
         </div>
         <div>
           <label>End Date (Optional)</label>
-          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+          <input type="date" value={endDate || ''} onChange={(e) => setEndDate(e.target.value)} />
         </div>
         <button type="submit">Add Job</button>
       </form>

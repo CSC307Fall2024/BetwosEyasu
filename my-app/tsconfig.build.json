@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "lib": ["esnext"],
+      "target": "esnext",
+      "module": "commonjs", // Use commonjs for ts-node compatibility
+      "moduleResolution": "node", // Use node module resolution for ts-node
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true
+    },
+    "include": ["prisma/**/*.ts"]
+  }
+  
